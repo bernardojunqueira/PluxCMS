@@ -1,4 +1,4 @@
-package br.com.plux.cms.dao;
+package br.com.plux.cms.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

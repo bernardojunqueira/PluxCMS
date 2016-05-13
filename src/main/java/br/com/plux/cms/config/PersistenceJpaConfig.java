@@ -23,7 +23,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "br.com.plux.cms.dao")
+@EnableJpaRepositories(basePackages = "br.com.plux.cms.repository")
 @PropertySource({ "classpath:persistence.properties" })
 public class PersistenceJpaConfig {
 

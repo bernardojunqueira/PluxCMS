@@ -1,5 +1,6 @@
 package br.com.plux.cms.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -14,7 +15,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8905747524628852361L;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +29,8 @@ public class User {
     private String firstName;
 
     private String lastName;
-
+    
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Column(length = 60)
@@ -37,9 +44,13 @@ public class User {
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id") , inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id") )
     private Collection<Role> roles;
     
-    public User() {
-        super();
-        this.enabled = false;
+    public User(User user) {
+    	this.id = user.id;
+		this.firstName = user.firstName;
+		this.lastName = user.lastName;
+		this.email = user.email;
+		this.password = user.password;
+        //this.enabled = false;
         this.tokenExpired = false;
     }
 
