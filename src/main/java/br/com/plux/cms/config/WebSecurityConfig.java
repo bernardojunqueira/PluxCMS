@@ -14,11 +14,11 @@ public class WebSecurityConfig {
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-			.jdbcAuthentication()
-				.dataSource(dataSource)
-				.withDefaultSchema()
-				.withUser("user").password("password").roles("USER");
+//		auth
+//			.jdbcAuthentication()
+//				.dataSource(dataSource)
+//				.withDefaultSchema()
+//				.withUser("user").password("password").roles("USER");
 	}
 
 }
