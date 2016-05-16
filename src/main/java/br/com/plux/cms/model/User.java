@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -26,8 +28,11 @@ public class User implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+	@NotNull
+	@Size(min=5, max=16)
     private String firstName;
-
+	
+	@NotNull
     private String lastName;
     
     @Column(unique = true, nullable = false)
@@ -44,7 +49,13 @@ public class User implements Serializable{
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id") , inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id") )
     private Collection<Role> roles;
     
-    public User(User user) {
+    
+    public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public User(User user) {
     	this.id = user.id;
 		this.firstName = user.firstName;
 		this.lastName = user.lastName;

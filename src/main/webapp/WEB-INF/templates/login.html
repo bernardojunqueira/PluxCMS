@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="#{title.application}">INSPINIA | Login</title>
+
+    <link href="css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" th:href="@{/resources/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <link href="css/animate.css" th:href="@{/resources/css/animate.css}" rel="stylesheet">
+    <link href="css/style.css" th:href="@{/resources/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name">Plux</h1>
+
+            </div>
+            <h3>CMS</h3>
+            <p>Inicie sessão no Plux CMS</p>
+            <div th:if="${param.error}" class="alert alert-danger" th:text="#{login.error}">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}" class="alert alert-success" th:text="#{login.logout}">
+            You have been logged out.
+        </div>
+            <form name="loginForm" class="m-t" role="form" th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="username" placeholder="Username" required="required">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+
+                <a href="#"><small>Esqueceu a senha?</small></a>
+                <p class="text-muted text-center"><small>Manter a sessão aberta</small></p>
+                
+            </form>
+            <p class="m-t"> <small>Copyright &copy; 2016 Plux. Todos os direitos reservados.</small> </p>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script type="text/javascript" src="js/jquery-2.1.1.js" th:src="@{/resources/js/jquery-2.1.1.js}"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+
+</body>
+
+</html>
