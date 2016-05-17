@@ -27,7 +27,8 @@
             </div>
             <h3>CMS</h3>
             <p>Inicie sessão no Plux CMS</p>
-            <div th:if="${param.error}" class="alert alert-danger" th:text="#{login.error}">
+            <div th:if="${param.error != null}" class="alert alert-danger" th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}">
+<!--             <div th:if="${param.error}" class="alert alert-danger" th:text="#{login.error}"> -->
             Invalid username and password.
         </div>
         <div th:if="${param.logout}" class="alert alert-success" th:text="#{login.logout}">

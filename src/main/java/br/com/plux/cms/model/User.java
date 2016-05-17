@@ -13,7 +13,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -29,7 +28,6 @@ public class User implements Serializable{
     private Long id;
 
 	@NotNull
-	@Size(min=5, max=16)
     private String firstName;
 	
 	@NotNull

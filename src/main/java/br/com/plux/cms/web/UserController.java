@@ -14,7 +14,6 @@ import org.springframework.web.context.request.WebRequest;
 
 import br.com.plux.cms.model.User;
 import br.com.plux.cms.repository.UserRepository;
-import br.com.plux.cms.util.SetupDataLoader;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -25,9 +24,6 @@ public class UserController {
 	
 	@Autowired
     private PasswordEncoder passwordEncoder;
-	
-	@Autowired
-    private SetupDataLoader setupDataLoader;
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String showRegistrationForm(WebRequest request, Model model) {
@@ -51,12 +47,6 @@ public class UserController {
 	    
 		userRepository.save(user);
 	    return "redirect:/minor";
-	}
-	
-	@RequestMapping(value = "/setup", method = RequestMethod.GET)
-	public String createSetupData() {
-		setupDataLoader.setupData();
-		return "redirect:/minor"; 
 	}
 	
 	private boolean emailExist(final String email) {

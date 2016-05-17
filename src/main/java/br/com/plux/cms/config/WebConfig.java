@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -38,6 +39,27 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 		this.applicationContext = applicationContext;
 		
 	}
+    
+    @Override
+    public void addViewControllers(final ViewControllerRegistry registry) {
+        super.addViewControllers(registry);
+        registry.addViewController("/").setViewName("forward:/login");
+        registry.addViewController("/login");
+        registry.addViewController("/dashboard");
+//        registry.addViewController("/logout.html");
+//        registry.addViewController("/homepage.html");
+//        registry.addViewController("/expiredAccount.html");
+//        registry.addViewController("/badUser.html");
+//        registry.addViewController("/emailError.html");
+//        registry.addViewController("/home.html");
+//        registry.addViewController("/invalidSession.html");
+//        registry.addViewController("/console.html");
+//        registry.addViewController("/admin.html");
+//        registry.addViewController("/successRegister.html");
+//        registry.addViewController("/forgetPassword.html");
+//        registry.addViewController("/updatePassword.html");
+//        registry.addViewController("/changePassword.html");
+    }
     
 //	@Bean(name = "viewResolver")
 //	public InternalResourceViewResolver getViewResolver() {
