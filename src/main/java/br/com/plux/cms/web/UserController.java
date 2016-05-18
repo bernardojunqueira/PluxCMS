@@ -16,7 +16,7 @@ import br.com.plux.cms.model.User;
 import br.com.plux.cms.repository.UserRepository;
 
 @Controller
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/users")
 public class UserController {
 	
 	@Autowired
@@ -24,6 +24,12 @@ public class UserController {
 	
 	@Autowired
     private PasswordEncoder passwordEncoder;
+	
+	@RequestMapping(value = {"", "/list"}, method = RequestMethod.GET)
+	public String showUsers (Model model) {
+		model.addAttribute("users", userRepository.findOne((long) 1));
+		return "/users/index";
+	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String showRegistrationForm(WebRequest request, Model model) {

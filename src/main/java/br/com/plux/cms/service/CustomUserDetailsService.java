@@ -50,8 +50,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 				throw new UsernameNotFoundException("No user found with username: " + email);
 			}
 
-			return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-					user.isEnabled(), true, true, true, getAuthorities(user.getRoles()));
+			return new br.com.plux.cms.service.CustomUserDetails(user.getEmail(), user.getPassword(),
+					user.isEnabled(), true, true, true, getAuthorities(user.getRoles()), user.getFirstName(), user.getLastName());
 		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}

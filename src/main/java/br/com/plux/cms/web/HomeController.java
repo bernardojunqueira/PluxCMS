@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HomeController {
 
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String loginPage () {
+		return "login";
+	}
+	
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -21,10 +26,10 @@ public class HomeController {
 		}
 		return "redirect:/login?logout";
 	}
-    
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public String hello() {
-        return "hello";
-    }
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String mainPage () {
+		return "index";
+	}
 
 }

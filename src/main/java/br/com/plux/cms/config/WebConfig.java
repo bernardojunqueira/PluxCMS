@@ -17,6 +17,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
@@ -43,9 +44,9 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     @Override
     public void addViewControllers(final ViewControllerRegistry registry) {
         super.addViewControllers(registry);
-        registry.addViewController("/").setViewName("forward:/login");
-        registry.addViewController("/login");
-        registry.addViewController("/dashboard");
+        //registry.addViewController("/").setViewName("forward:/login");
+        //registry.addViewController("/login");
+        //registry.addViewController("/dashboard");
 //        registry.addViewController("/logout.html");
 //        registry.addViewController("/homepage.html");
 //        registry.addViewController("/expiredAccount.html");
@@ -133,6 +134,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setEnableSpringELCompiler(true); // Compiled SpringEL should speed up executions
         templateEngine.setTemplateResolver(templateResolver());
+        templateEngine.addDialect(new SpringSecurityDialect());
         return templateEngine;
     }
 

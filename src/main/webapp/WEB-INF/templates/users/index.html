@@ -1,0 +1,120 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:include="fragments :: head"></head>
+<body>
+<div id="wrapper">
+
+	<!-- Main Navigation -->
+	<nav th:replace="fragments :: navbar-static-side"></nav>
+	
+	<div id="page-wrapper" class="gray-bg">
+		<!-- Minor Navigation -->
+		<div th:replace="fragments :: navbar-static-top"></div>
+		
+		<!-- Title, Breadcrumb and Actions Navigation -->
+		<div th:replace="fragments :: page-heading(~{::h2},~{::li})">
+			<h2>Users</h2>
+			<li class="active"><strong>Users</strong></li>
+		</div>
+		
+		<!-- Main Content -->
+		
+		<div class="wrapper wrapper-content animated fadeInRight">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>FooTable with row toggler, sorting and pagination</h5>
+
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#">Config option 1</a>
+                                    </li>
+                                    <li><a href="#">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+
+                            <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                                <thead>
+                                <tr>
+
+                                    <th data-toggle="true">Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Telefone</th>
+                                    <th data-hide="all">Grupos</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user : ${users}">
+                                    <td th:text="${user.firstName + ' ' + user.lastName}">nome e sobrenome</td>
+                                    <td th:text="${user.email}">email</td>
+                                    <td>(61)9999-9999</td>
+                                    <td th:text="${user.roles}">Grupos</td>
+                                    <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                                </tr>
+                                
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <ul class="pagination pull-right"></ul>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+		
+		<!-- APP Footer -->
+		<div th:replace="fragments :: footer"></div>
+	</div>
+</div>
+
+<!-- Mainly scripts -->
+<script src="js/jquery-2.1.1.js" th:src="@{/resources/js/jquery-2.1.1.js}"></script>
+<script src="js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js" th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js" th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<!-- FooTable -->
+<script src="js/plugins/footable/footable.all.min.js" th:src="@{/resources/js/plugins/footable/footable.all.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
+<script src="js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+
+<!-- Page-Level Scripts -->
+    <script>
+        $(document).ready(function() {
+
+            $('.footable').footable();
+
+        });
+
+    </script>
+
+</body>
+</html>
