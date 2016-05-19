@@ -8,16 +8,23 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title th:text="#{title.application}">INSPINIA | Login</title>
+	<title th:text="#{title.application}">HEAD TITLE</title>
 
 	<link href="css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet">
 	<link href="font-awesome/css/font-awesome.css" th:href="@{/resources/font-awesome/css/font-awesome.css}" rel="stylesheet">
 
-	<link href="css/animate.css" th:href="@{/resources/css/animate.css}" rel="stylesheet">
-	<link href="css/style.css" th:href="@{/resources/css/style.css}" rel="stylesheet">
+	
 	
 	 <!-- FooTable -->
     <link href="css/plugins/footable/footable.core.css" th:href="@{/resources/css/plugins/footable/footable.core.css}" rel="stylesheet">
+    
+    <!-- Chosen -->
+    <link href="css/plugins/chosen/chosen.css" th:href="@{/resources/css/plugins/chosen/chosen.css}" rel="stylesheet">
+    
+    <link href="css/animate.css" th:href="@{/resources/css/animate.css}" rel="stylesheet">
+	<link href="css/style.css" th:href="@{/resources/css/style.css}" rel="stylesheet">
+    
+    
 </head>
 
 <body>
@@ -40,7 +47,7 @@
 								<li><a href="javascript:logout.submit()">Logout</a></li>
 							</ul>
 						</div>
-						<div class="logo-element">TeeVee</div>
+						<div class="logo-element">Plux CMS</div>
 					</li>
 					<li class="active"><a href="index.html"><i
 							class="fa fa-film"></i> <span class="nav-label">AD Copies</span></a></li>
@@ -66,7 +73,7 @@
 							class="nav-label">Registrations</span> </a></li>
 					<li><a href="/groups/index.html" th:href="@{/groups}"><i class="fa fa-users"></i> <span
 							class="nav-label">User Groups</span> </a></li>
-					<li><a href="/users/index.html" th:href="@{/users}"><i class="fa fa-user"></i> <span
+					<li th:classappend="${#httpServletRequest.servletPath} == '/users' ? active : ''"><a href="/users/index.html" th:href="@{/users}"><i class="fa fa-user"></i> <span
 							class="nav-label">Users</span> </a></li>
 				</ul>
 			</div>
@@ -101,24 +108,25 @@
 			</div>
 
 			<!-- Title, Breadcrumb and Actions Navigation -->
-			<div th:fragment="page-heading(h2,lis)"
+			<div th:fragment="page-heading"
 				class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-9">
-					<h2 th:replace="${h2}">This is main title</h2>
+					<h2 th:text="${#httpServletRequest.servletPath}">This is main title</h2>
 					<ol class="breadcrumb">
-						<li><a href="index.html" th:href="@{/}">Dashboard</a></li>
-						<th:block th:replace="${lis}" />
-<!-- 						<li class="active"><strong>Breadcrumb</strong></li> -->
+						<li><a href="index.html" th:href="@{/}">home</a></li>
+						<li class="active"><strong th:text="${#httpServletRequest.servletPath}">Servlet Path</strong></li>
 					</ol>
 				</div>
 				<div class="col-lg-3">
 					<div class="title-action">
-						<a href="" class="btn btn-primary">This is action area</a>
+						<a href="" th:href="${#httpServletRequest.requestURI + '/new'}" class="btn btn-primary">Novo</a>
 					</div>
 				</div>
 			</div>
 
 			<!-- Main Content -->
+			
+			
 
 
 			<!-- APP Footer -->

@@ -16,10 +16,7 @@
 		<div th:replace="fragments :: navbar-static-top"></div>
 		
 		<!-- Title, Breadcrumb and Actions Navigation -->
-		<div th:replace="fragments :: page-heading(~{::h2},~{::li})">
-			<h2>Users</h2>
-			<li class="active"><strong>Users</strong></li>
-		</div>
+		<div th:replace="fragments :: page-heading"></div>
 		
 		<!-- Main Content -->
 		
@@ -29,12 +26,12 @@
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>FooTable with row toggler, sorting and pagination</h5>
+                            <h5>Listagem de usuários</h5>
 
                             <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
+<!--                                 <a class="collapse-link"> -->
+<!--                                     <i class="fa fa-chevron-up"></i> -->
+<!--                                 </a> -->
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                     <i class="fa fa-wrench"></i>
                                 </a>
@@ -44,9 +41,9 @@
                                     <li><a href="#">Config option 2</a>
                                     </li>
                                 </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
+                                <a class="fullscreen-link">
+                                <i class="fa fa-expand"></i>
+                            </a>
                             </div>
                         </div>
                         <div class="ibox-content">
@@ -56,18 +53,20 @@
                                 <tr>
 
                                     <th data-toggle="true">Nome</th>
-                                    <th>E-mail</th>
+                                    <th>E-Mail</th>
                                     <th>Telefone</th>
+                                    <th>Último Login</th>
                                     <th data-hide="all">Grupos</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="user : ${users}">
-                                    <td th:text="${user.firstName + ' ' + user.lastName}">nome e sobrenome</td>
-                                    <td th:text="${user.email}">email</td>
+                                <tr th:each="user : ${users}" th:onclick="'getRoles(\'' + ${user.id} + '\');'">
+                                    <td th:text="${user.firstName + ' ' + user.lastName}">NOME SOBRENOME</td>
+                                    <td th:text="${user.email}">EMAIL</td>
                                     <td>(61)9999-9999</td>
-                                    <td th:text="${user.roles}">Grupos</td>
+                                    <td>[[${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}]]</td>
+                                    <td th:text="${user.roles}">ROLES</td>
                                     <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
                                 </tr>
                                 
@@ -114,7 +113,13 @@
 
         });
 
+        function getRoles(id) {
+        	var url = '[[@{/users/}]]' + id;
+        	$("#user1").load(url); 
+        }
     </script>
+    
+    
 
 </body>
 </html>

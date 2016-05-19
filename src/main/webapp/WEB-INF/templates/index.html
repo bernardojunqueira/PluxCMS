@@ -16,10 +16,7 @@
 		<div th:replace="fragments :: navbar-static-top"></div>
 		
 		<!-- Title, Breadcrumb and Actions Navigation -->
-		<div th:replace="fragments :: page-heading(~{::h2},~{::li})">
-			<h2>Dashboard</h2>
-			<li class="active"><strong>Console</strong></li>
-		</div>
+		<div th:replace="fragments :: page-heading"></div>
 		
 		<!-- Main Content -->
 		<h1>Hello [[${#httpServletRequest.remoteUser}]]!</h1>
