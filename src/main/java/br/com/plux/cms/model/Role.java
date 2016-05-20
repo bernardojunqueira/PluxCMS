@@ -2,6 +2,7 @@ package br.com.plux.cms.model;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,8 +19,9 @@ public class Role {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToMany(mappedBy = "roles")
+	
+	@ManyToMany(mappedBy = "roles")
+    //@ManyToMany(mappedBy = "roles", cascade = CascadeType.PERSIST)
     private Collection<User> users;
 
     @ManyToMany

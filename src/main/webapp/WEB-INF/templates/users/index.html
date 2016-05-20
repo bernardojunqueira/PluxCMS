@@ -67,7 +67,7 @@
                                     <td>(61)9999-9999</td>
                                     <td>[[${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}]]</td>
                                     <td th:text="${user.roles}">ROLES</td>
-                                    <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                                    <td><a href="#" th:href="@{/users/edit/} + ${user.id}"><i class="fa fa-check text-navy"></i></a></td>
                                 </tr>
                                 
                                 </tbody>
