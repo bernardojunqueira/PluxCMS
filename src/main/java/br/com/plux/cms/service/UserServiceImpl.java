@@ -10,11 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.plux.cms.erro.UserAlreadyExistException;
 import br.com.plux.cms.model.Role;
 import br.com.plux.cms.model.User;
 import br.com.plux.cms.repository.RoleRepository;
 import br.com.plux.cms.repository.UserRepository;
+import br.com.plux.cms.validation.EmailExistsException;
 
 @Service
 @Transactional
@@ -32,9 +32,9 @@ public class UserServiceImpl implements UserService {
 	
 
 	@Override
-	public User createUser(final UserDto userDto) {
+	public User createUser(UserDto userDto) throws EmailExistsException {
 		if (emailExists(userDto.getEmail())) {
-			throw new UserAlreadyExistException("There is an account with that email adress: " + userDto.getEmail());
+			throw new EmailExistsException("There is an account with that email adress: " + userDto.getEmail());
 		}
 		final User user = new User();
 		user.setFirstName(userDto.getFirstName());

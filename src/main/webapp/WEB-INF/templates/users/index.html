@@ -39,7 +39,7 @@
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Listagem de usuários</h5>
+                            <h5>[[#{users.list.ibox.title}]]</h5>
 
                             <div class="ibox-tools">
 <!--                                 <a class="collapse-link"> -->
@@ -61,22 +61,22 @@
                         </div>
                         <div class="ibox-content">
 
-                            <table id="teste" class="footable table table-stripped toggle-arrow-tiny" data-page-size="10">
+                            <table id="userList" class="footable table table-stripped toggle-arrow-tiny" data-page-size="10">
                                 <thead>
                                 <tr>
 
-                                    <th data-toggle="true">Nome</th>
-                                    <th>E-Mail</th>
-                                    <th>Telefone</th>
-                                    <th>Último Login</th>
-                                    <th>Status</th>
-                                    <th data-hide="all">Grupos</th>
-                                    <th class="text-right">Action</th>
+                                    <th data-toggle="true">[[#{users.list.table.username}]]</th>
+                                    <th>[[#{users.list.table.email}]]</th>
+                                    <th>[[#{users.list.table.phone}]]</th>
+                                    <th>[[#{users.list.table.lastLogin}]]</th>
+                                    <th>[[#{users.list.table.enabled}]]</th>
+                                    <th data-hide="all">[[#{users.list.table.roles}]]</th>
+                                    <th class="text-right">[[#{users.list.table.action}]]</th>
                                     
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="user : ${users}" th:onclick="'getRoles(\'' + ${user.id} + '\');'">
+                                <tr th:each="user : ${users}">
                                     <td th:text="${user.firstName + ' ' + user.lastName}">[user.firstName + user.lastName]</td>
                                     <td th:text="${user.email}">[user.email]</td>
                                     <td>[user.phone]</td>
@@ -88,9 +88,9 @@
 
                                     <td class="text-right">
                                         <div class="btn-group">
-                                        	<a href="#" th:href="@{/users/}" class="btn-white btn btn-xs" role="button">View</a>
-                                            <a href="#" th:href="@{/users/edit/} + ${user.id}" class="btn-white btn btn-xs" role="button">Edit</a>
-                                            <a href="#" th:onclick="'deleteUser(\'' + ${user.id} + '\');'" class="btn-white btn btn-xs" role="button">Delete</a>
+                                        	<a href="#" th:href="@{/users/}" class="btn-white btn btn-xs" role="button" th:text="#{users.list.button.view}">View</a>
+                                            <a href="#" th:href="@{/users/edit/} + ${user.id}" class="btn-white btn btn-xs" role="button" th:text="#{users.list.button.edit}">Edit</a>
+                                            <a href="#" th:onclick="'deleteUser(\'' + ${user.id} +'\',\''+ ${user.firstName + ' ' + user.lastName} + '\');'" class="btn-white btn btn-xs" role="button" th:text="#{users.list.button.delete}">Delete</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -132,36 +132,32 @@
             $('.footable').footable();
 
         });
-
-        function getRoles(id) {
-        	var url = '[[@{/users/}]]' + id;
-        	$("#user1").load(url); 
-        }
         
-        function deleteUser(id) {
+        function deleteUser(id,username) {
         	swal({
-                title: "Are you sure?",
-                text: "You will not be able to recover this imaginary file!",
+                title: "[[#{users.list.swal.title}]]",
+                text: "[[#{users.list.swal.text}]]" + " " + username + "!",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: "[[#{users.list.swal.confirmButtonText}]]",
+                cancelButtonText: "[[#{users.list.swal.cancelButtonText}]]", 
                 closeOnConfirm: false
             }, function () {
             	$.ajax(
             		{
                     	type : "GET",
-                    	url : '[[@{/users/delete/}]]' + id,
+                    	url : "[[@{/users/delete/}]]" + id,
                     	success : function(response) {
                     	}
             		}
             	)
             	.done(function(response) {
-            		swal("Deleted!", "User [user.firstName] has been deleted.", "success");
-            		$('#teste').load(document.URL +  ' #teste');
+            		swal("[[#{users.list.swal.done.title}]]", "[[#{users.list.swal.done.text}]]", "success");
+            		$('#userList').load(document.URL +  ' #userList');
             	})
             	.error(function(response) {
-            		swal("Oops", "We couldn't connect to the server!", "error");
+            		swal("Oops", "[[#{users.list.swal.error.text}]]", "error");
             	}); 
             });
         }

@@ -1,7 +1,5 @@
 package br.com.plux.cms.web;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import javax.validation.Valid;
@@ -10,20 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.WebRequest;
 
-import br.com.plux.cms.model.Role;
 import br.com.plux.cms.model.User;
 import br.com.plux.cms.repository.RoleRepository;
 import br.com.plux.cms.repository.UserRepository;
 import br.com.plux.cms.service.UserDto;
 import br.com.plux.cms.service.UserService;
+import br.com.plux.cms.validation.EmailExistsException;
 
 @Controller
 @RequestMapping(value = "/users")
@@ -58,7 +57,7 @@ public class UserController {
 
 	// new User form
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String newUser(Model model) {
+	public String newUser(WebRequest request, Model model) {
 		model.addAttribute("userDto", new UserDto());
 		model.addAttribute("allRoles", roleRepository.findAll());
 		model.addAttribute("actionType", "NEW");
@@ -67,12 +66,22 @@ public class UserController {
 
 	// save new User
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public String saveUser(@Valid UserDto userDto, Model model, Errors errors) {
-		if (errors.hasErrors()) {
+	public String saveUser(@Valid @ModelAttribute("userDto") UserDto userDto, BindingResult result, WebRequest request, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("actionType", "NEW");
+			model.addAttribute("allRoles", roleRepository.findAll());
 			return "/users/userForm";
 		}
-		final User registered = service.createUser(userDto);
-		model.addAttribute("message", "Usuário: " + registered.getFirstName() + " adicionado com sucesso");
+		try {
+			final User registered = service.createUser(userDto);
+			//model.addAttribute("message", "Usuário: " + registered.getFirstName() + " adicionado com sucesso");
+		} catch (EmailExistsException e){
+			model.addAttribute("actionType", "NEW");
+			model.addAttribute("allRoles", roleRepository.findAll());
+			result.rejectValue("email", "validation.exists", "exists");
+			return "/users/userForm";
+		}
+		
 		return "redirect:/users";
 	}
 

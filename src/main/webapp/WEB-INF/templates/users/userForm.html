@@ -1,4 +1,4 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+	<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
@@ -32,10 +32,7 @@
 					<div class="col-lg-12">
 						<div class="ibox float-e-margins">
 							<div class="ibox-title">
-								<h5>
-									Informações do usuário <small> (*) Campos com
-										preenchimento obrigatório.</small>
-								</h5>
+								<h5>[[#{users.form.ibox.title}]]<small> (*) [[#{users.form.ibox.titleSmall}]]</small></h5>
 								<div class="ibox-tools">
 									<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
 									</a> <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -52,49 +49,54 @@
 							
 							<div th:if="${actionType=='NEW'}" class="ibox-content">
 								<form class="form-horizontal" th:object="${userDto}" th:action="@{/users}" method="post" >
-									<div class="form-group">
-										<label class="col-sm-2 control-label">Nome *</label>
+									<div class="form-group" th:classappend="${#fields.hasErrors('firstName')}? 'has-error'">
+										<label class="col-sm-2 control-label" th:text="#{users.form.label.firstName} + ' *'">[user.firstName] *</label>
 										<div class="col-sm-10">
 											<input type="text" class="form-control" th:field="*{firstName}">
+											<span class="help-block m-b-none" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">[errors.firstName]</span>
 										</div>
 									</div>
-									<div class="form-group">
-										<label class="col-sm-2 control-label">Sobrenome *</label>
+									<div class="form-group" th:classappend="${#fields.hasErrors('lastName')}? 'has-error'">
+										<label class="col-sm-2 control-label" th:text="#{users.form.label.lastName} + ' *'">[user.lastName] *</label>
 										<div class="col-sm-10">
 											<input type="text" class="form-control" th:field="*{lastName}">
+											<span class="help-block m-b-none" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">[errors.lastName]</span>
 										</div>
 									</div>
 									<div class="hr-line-dashed"></div>
 									<div class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
-										<label class="col-sm-2 control-label">E-mail *</label>
+										<label class="col-sm-2 control-label" th:text="#{users.form.label.email} + ' *'">[user.email] *</label>
 										<div class="col-sm-10">
 											<input type="email" class="form-control" th:field="*{email}">
+											<span class="help-block m-b-none" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">[errors.email.exist]</span>
 										</div>
-										<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">EMAIL ERRO</p>
 									</div>
 									<div class="hr-line-dashed"></div>
-									<div class="form-group">
-										<label class="col-sm-2 control-label">Senha *</label>
+									<div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
+										<label class="col-sm-2 control-label" th:text="#{users.form.label.password} + ' *'">[user.password] *</label>
 
 										<div class="col-sm-10">
 											<input type="password" class="form-control" th:field="*{password}">
+											<span class="help-block m-b-none" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">[errors.password]</span>
 										</div>
 									</div>
-									<div class="form-group">
-										<label class="col-sm-2 control-label">Confirma Senha *</label>
+									<div class="form-group" th:classappend="${#fields.hasErrors('global')}? 'has-error'">
+										<label class="col-sm-2 control-label" th:text="#{users.form.label.matchingPassword} + ' *'">[user.matchingPassword] *</label>
 
 										<div class="col-sm-10">
 											<input type="password" class="form-control" th:field="*{matchingPassword}">
+											<span class="help-block m-b-none" th:if="${#fields.hasErrors('global')}" th:errors="*{global}">[errors.password]</span>
 										</div>
 									</div>
 									<div class="hr-line-dashed"></div>
-									<div class="form-group">
-										<label class="col-sm-2 control-label">Grupos *</label>
+									<div class="form-group" th:classappend="${#fields.hasErrors('roles')}? 'has-error'">
+										<label class="col-sm-2 control-label" th:text="#{users.form.label.roles} + ' *'">[user.roles] *</label>
 										<div class="col-sm-10">
-											<select th:field="${userDto.roles}" data-placeholder="Selecione os grupos" class="chosen-select" multiple style="width:350px;" tabindex="4">
+											<select th:field="${userDto.roles}" data-th-placeholder="#{users.form.select.placeHolder}" class="chosen-select" multiple style="width:350px;" tabindex="4">
             									<option value=""></option>
             									<option th:each="role : ${allRoles}" th:value="${role.id}" th:text="${role.name}"></option>
           									</select>
+          									<span class="help-block m-b-none" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">[errors.roles]</span>
 										</div>
 									</div>
 									<div class="form-group">

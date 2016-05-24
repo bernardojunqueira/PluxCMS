@@ -2,13 +2,37 @@ package br.com.plux.cms.service;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import br.com.plux.cms.validation.PasswordMatches;
+import br.com.plux.cms.validation.ValidEmail;
+
+@PasswordMatches
 public class UserDto {
 	
+	@NotNull
+	@Size(min = 5)
 	private String firstName;
+	
+	@NotNull
+	@Size(min = 1)
 	private String lastName;
+	
+	@NotNull
+	@Size(min = 1)
 	private String password;
+	
+	@NotNull
+	@Size(min = 1)
 	private String matchingPassword;
+	
+	@ValidEmail
+	@NotNull
+	@Size(min = 1)
 	private String email;
+	
+	@NotNull
 	private List<Long> roles;
 	
 	
