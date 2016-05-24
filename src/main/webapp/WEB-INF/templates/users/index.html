@@ -4,7 +4,20 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<head th:include="fragments :: head"></head>
+<!-- <head th:include="fragments :: head"></head> -->
+
+<head th:replace="fragments/head :: common_header(~{::title},~{::link})">
+
+  <title>[[#{users.page.title}]]</title>
+
+  <!-- FooTable -->
+  <link th:href="@{/resources/css/plugins/footable/footable.core.css}" rel="stylesheet">
+  
+  <!-- Sweet Alert -->
+  <link th:href="@{/resources/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet">
+
+</head>
+
 <body>
 <div id="wrapper">
 
@@ -48,7 +61,7 @@
                         </div>
                         <div class="ibox-content">
 
-                            <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="8">
+                            <table id="teste" class="footable table table-stripped toggle-arrow-tiny" data-page-size="10">
                                 <thead>
                                 <tr>
 
@@ -56,24 +69,36 @@
                                     <th>E-Mail</th>
                                     <th>Telefone</th>
                                     <th>Último Login</th>
+                                    <th>Status</th>
                                     <th data-hide="all">Grupos</th>
-                                    <th>Action</th>
+                                    <th class="text-right">Action</th>
+                                    
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr th:each="user : ${users}" th:onclick="'getRoles(\'' + ${user.id} + '\');'">
-                                    <td th:text="${user.firstName + ' ' + user.lastName}">NOME SOBRENOME</td>
-                                    <td th:text="${user.email}">EMAIL</td>
-                                    <td>(61)9999-9999</td>
+                                    <td th:text="${user.firstName + ' ' + user.lastName}">[user.firstName + user.lastName]</td>
+                                    <td th:text="${user.email}">[user.email]</td>
+                                    <td>[user.phone]</td>
                                     <td>[[${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}]]</td>
-                                    <td th:text="${user.roles}">ROLES</td>
-                                    <td><a href="#" th:href="@{/users/edit/} + ${user.id}"><i class="fa fa-check text-navy"></i></a></td>
+                                    <td>
+                                    	<span th:text="${user.enabled}? 'ativada' : 'desativada'" th:class="${user.enabled}? 'label label-primary' : 'label label-danger'" class="label label-primary">[user.enabled]</span>
+                                    </td>
+                                    <td>[user.roles]</td>
+
+                                    <td class="text-right">
+                                        <div class="btn-group">
+                                        	<a href="#" th:href="@{/users/}" class="btn-white btn btn-xs" role="button">View</a>
+                                            <a href="#" th:href="@{/users/edit/} + ${user.id}" class="btn-white btn btn-xs" role="button">Edit</a>
+                                            <a href="#" th:onclick="'deleteUser(\'' + ${user.id} + '\');'" class="btn-white btn btn-xs" role="button">Delete</a>
+                                        </div>
+                                    </td>
                                 </tr>
                                 
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <td colspan="5">
+                                    <td colspan="7">
                                         <ul class="pagination pull-right"></ul>
                                     </td>
                                 </tr>
@@ -91,24 +116,19 @@
 		<div th:replace="fragments :: footer"></div>
 	</div>
 </div>
+	
+	<!--/* Placeholder for mainly scripts */-->
+	<th:block th:include="fragments/scripts :: common_scripts" />
 
-<!-- Mainly scripts -->
-<script src="js/jquery-2.1.1.js" th:src="@{/resources/js/jquery-2.1.1.js}"></script>
-<script src="js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
-<script src="js/plugins/metisMenu/jquery.metisMenu.js" th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
-<script src="js/plugins/slimscroll/jquery.slimscroll.min.js" th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+	<!-- FooTable -->
+	<script src="js/plugins/footable/footable.all.min.js" th:src="@{/resources/js/plugins/footable/footable.all.min.js}"></script>
+	
+	<!-- Sweet alert -->
+    <script src="js/plugins/sweetalert/sweetalert.min.js" th:src="@{/resources/js/plugins/sweetalert/sweetalert.min.js}"></script>
 
-<!-- FooTable -->
-<script src="js/plugins/footable/footable.all.min.js" th:src="@{/resources/js/plugins/footable/footable.all.min.js}"></script>
-
-<!-- Custom and plugin javascript -->
-<script src="js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
-<script src="js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
-
-<!-- Page-Level Scripts -->
+	<!-- Page-Level Scripts -->
     <script>
         $(document).ready(function() {
-
             $('.footable').footable();
 
         });
@@ -117,9 +137,36 @@
         	var url = '[[@{/users/}]]' + id;
         	$("#user1").load(url); 
         }
+        
+        function deleteUser(id) {
+        	swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this imaginary file!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            }, function () {
+            	$.ajax(
+            		{
+                    	type : "GET",
+                    	url : '[[@{/users/delete/}]]' + id,
+                    	success : function(response) {
+                    	}
+            		}
+            	)
+            	.done(function(response) {
+            		swal("Deleted!", "User [user.firstName] has been deleted.", "success");
+            		$('#teste').load(document.URL +  ' #teste');
+            	})
+            	.error(function(response) {
+            		swal("Oops", "We couldn't connect to the server!", "error");
+            	}); 
+            });
+        }
+        	
     </script>
-    
-    
 
 </body>
 </html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	  
+<head th:fragment="common_header(title,links)">
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title th:replace="${title}">[head.title]</title>
+	
+	<!-- Common styles and scripts -->
+	
+	<link th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/resources/font-awesome/css/font-awesome.css}" rel="stylesheet">
+	
+	<!--/* Per-page placeholder for additional links */-->
+	<th:block th:replace="${links}" />
+	
+	<link th:href="@{/resources/css/animate.css}" rel="stylesheet">
+	<link th:href="@{/resources/css/style.css}" rel="stylesheet">
+	
+</head>
+
+<body>
+
+</body>
+</html>

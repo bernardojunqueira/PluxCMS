@@ -20,8 +20,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@ManyToMany(mappedBy = "roles")
-    //@ManyToMany(mappedBy = "roles", cascade = CascadeType.PERSIST)
+	//@ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles", cascade = CascadeType.MERGE)
     private Collection<User> users;
 
     @ManyToMany

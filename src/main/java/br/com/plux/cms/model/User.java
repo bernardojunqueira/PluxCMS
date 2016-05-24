@@ -44,8 +44,8 @@ public class User implements Serializable{
 
     private boolean tokenExpired;
     
-    @ManyToMany
-    //@ManyToMany(cascade = CascadeType.PERSIST)
+    //@ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id") , inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id") )
     private Collection<Role> roles;
     

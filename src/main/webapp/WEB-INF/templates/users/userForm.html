@@ -4,9 +4,15 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<head th:include="fragments :: head">
+<head th:replace="fragments/head :: common_header(~{::title},~{::link})">
+
+  <title>[[#{users.page.title}]]</title>
+
+  <!-- Chosen -->
+  <link th:href="@{/resources/css/plugins/chosen/chosen.css}" rel="stylesheet">
 
 </head>
+
 <body>
 	<div id="wrapper">
 
@@ -87,7 +93,7 @@
 										<div class="col-sm-10">
 											<select th:field="${userDto.roles}" data-placeholder="Selecione os grupos" class="chosen-select" multiple style="width:350px;" tabindex="4">
             									<option value=""></option>
-            									<option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+            									<option th:each="role : ${allRoles}" th:value="${role.id}" th:text="${role.name}"></option>
           									</select>
 										</div>
 									</div>
@@ -127,15 +133,22 @@
 									
 									<div class="hr-line-dashed"></div>
 									<div class="form-group">
-										<label class="col-sm-2 control-label">Grupos *</label>
+										<label class="col-sm-2 control-label">Grupo(s) *</label>
 										<div class="col-sm-10">
-											<select th:field="${user.roles}" data-placeholder="Selecione os grupos" class="chosen-select" multiple style="width:350px;" tabindex="4">
-            									<option value=""></option>
-            									<option th:each="role : ${roles}" 
-            										th:field="${user.roles}"
-            										th:value="${role}" 
-            										th:text="${role.name}" >
+											<select id="roles" th:field="*{roles}" data-placeholder="Selecione os grupos" class="chosen-select" multiple style="width:350px;" tabindex="4">
+            									<option th:each="role : ${allRoles}"          										
+            										th:value="${role.name}" 
+            										th:text="${role.name}">
             									</option>
+          									</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label">Status *</label>
+										<div class="col-sm-10">
+											<select id="roles" th:field="*{enabled}" data-placeholder="Selecione os grupos" class="chosen-select" style="width:350px;" tabindex="4">
+            									<option value="true">ENABLED</option>        										
+            									<option value="false">DISABLED</option> 
           									</select>
 										</div>
 									</div>
@@ -158,15 +171,8 @@
 		</div>
 	</div>
 
-	<!-- Mainly scripts -->
-	<script src="js/jquery-2.1.1.js" th:src="@{/resources/js/jquery-2.1.1.js}"></script>
-	<script src="js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
-	<script src="js/plugins/metisMenu/jquery.metisMenu.js" th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
-	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js" th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
-
-	<!-- Custom and plugin javascript -->
-	<script src="js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
-	<script src="js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+	<!--/* Placeholder for mainly scripts */-->
+	<th:block th:include="fragments/scripts :: common_scripts" />
 		
 	<!-- Chosen -->
     <script src="js/plugins/chosen/chosen.jquery.js" th:src="@{/resources/js/plugins/chosen/chosen.jquery.js}"></script>
@@ -182,7 +188,7 @@
     for (var selector in config) {
       $(selector).chosen(config[selector]);
     }
-  </script>
+    </script>
        
 </body>
 </html>

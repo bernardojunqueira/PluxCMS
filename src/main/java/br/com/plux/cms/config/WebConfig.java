@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -22,6 +23,8 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
+
+import br.com.plux.cms.web.RoleFormatter;
 
 @Configuration
 @EnableWebMvc
@@ -146,7 +149,10 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
         return viewResolver;
     }
 
-	
+//    @Override
+//    public void addFormatters(FormatterRegistry formatterRegistry) {
+//        formatterRegistry.addFormatter(new RoleFormatter());
+//    }
 	
 
 }

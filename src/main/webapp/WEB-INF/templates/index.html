@@ -4,7 +4,14 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<head th:include="fragments :: head"></head>
+<head th:replace="fragments/head :: common_header(~{::title},~{::link})">
+
+  <title>[[#{home.page.title}]]</title>
+  
+  <link />
+
+</head>
+
 <body>
 <div id="wrapper">
 
@@ -33,15 +40,8 @@
 	</div>
 </div>
 
-<!-- Mainly scripts -->
-<script src="js/jquery-2.1.1.js" th:src="@{/resources/js/jquery-2.1.1.js}"></script>
-<script src="js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
-<script src="js/plugins/metisMenu/jquery.metisMenu.js" th:src="@{/resources/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
-<script src="js/plugins/slimscroll/jquery.slimscroll.min.js" th:src="@{/resources/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
-
-<!-- Custom and plugin javascript -->
-<script src="js/inspinia.js" th:src="@{/resources/js/inspinia.js}"></script>
-<script src="js/plugins/pace/pace.min.js" th:src="@{/resources/js/plugins/pace/pace.min.js}"></script>
+	<!--/* Placeholder for mainly scripts */-->
+	<th:block th:include="fragments/scripts :: common_scripts" />
 
 </body>
 </html>

@@ -4,31 +4,9 @@
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<head th:fragment="head">
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<title th:text="#{title.application}">HEAD TITLE</title>
-
-	<link href="css/bootstrap.min.css" th:href="@{/resources/css/bootstrap.min.css}" rel="stylesheet">
-	<link href="font-awesome/css/font-awesome.css" th:href="@{/resources/font-awesome/css/font-awesome.css}" rel="stylesheet">
-
-	
-	
-	 <!-- FooTable -->
-    <link href="css/plugins/footable/footable.core.css" th:href="@{/resources/css/plugins/footable/footable.core.css}" rel="stylesheet">
-    
-    <!-- Chosen -->
-    <link href="css/plugins/chosen/chosen.css" th:href="@{/resources/css/plugins/chosen/chosen.css}" rel="stylesheet">
-    
-    <link href="css/animate.css" th:href="@{/resources/css/animate.css}" rel="stylesheet">
-	<link href="css/style.css" th:href="@{/resources/css/style.css}" rel="stylesheet">
-    
-    
-</head>
-
 <body>
 	<div id="wrapper">
+	
 		<!-- Main Navigation -->
 		<nav th:fragment="navbar-static-side"
 			class="navbar-default navbar-static-side" role="navigation">
@@ -49,32 +27,19 @@
 						</div>
 						<div class="logo-element">Plux CMS</div>
 					</li>
-					<li class="active"><a href="index.html"><i
-							class="fa fa-film"></i> <span class="nav-label">AD Copies</span></a></li>
-					<li><a href="minor.html"><i class="fa fa-star"></i> <span
-							class="nav-label">Campaigns</span> </a></li>
-					<li><a href="minor.html"><i class="fa fa-gears"></i> <span
-							class="nav-label">Configurations</span> </a></li>
-					<li><a href="minor.html"><i class="fa fa-th-list"></i> <span
-							class="nav-label">Criteria</span> </a></li>
-					<li><a href="minor.html"><i class="fa fa-building-o"></i>
-							<span class="nav-label">Customers</span> </a></li>
-					<li><a href="minor.html"><i class="fa fa-arrows"></i> <span
-							class="nav-label">Display Types</span> </a></li>
-					<li><a href="minor.html"><i class="fa fa-bullseye"></i> <span
-							class="nav-label">Display Units</span> </a></li>
-					<li><a href="minor.html"><i class="fa fa-calendar-o"></i>
-							<span class="nav-label">Events</span> </a></li>
-					<li><a href="minor.html"><i class="fa fa-repeat"></i> <span
-							class="nav-label">Loop Policies</span> </a></li>
-					<li><a href="minor.html"><i class="fa fa-desktop"></i> <span
-							class="nav-label">Players</span> </a></li>
-					<li><a href="minor.html"><i class="fa fa-th-large"></i> <span
-							class="nav-label">Registrations</span> </a></li>
-					<li><a href="/groups/index.html" th:href="@{/groups}"><i class="fa fa-users"></i> <span
-							class="nav-label">User Groups</span> </a></li>
-					<li th:classappend="${#httpServletRequest.servletPath} == '/users' ? active : ''"><a href="/users/index.html" th:href="@{/users}"><i class="fa fa-user"></i> <span
-							class="nav-label">Users</span> </a></li>
+					<li><a href="#"><i class="fa fa-film"></i> <span class="nav-label">AD Copies</span> </a></li>
+					<li><a href="#"><i class="fa fa-star"></i> <span class="nav-label">Campaigns</span> </a></li>
+					<li><a href="#"><i class="fa fa-gears"></i> <span class="nav-label">Configurations</span> </a></li>
+					<li><a href="#"><i class="fa fa-th-list"></i> <span class="nav-label">Criteria</span> </a></li>
+					<li><a href="#"><i class="fa fa-building-o"></i> <span class="nav-label">Customers</span> </a></li>
+					<li><a href="#"><i class="fa fa-arrows"></i> <span class="nav-label">Display Types</span> </a></li>
+					<li><a href="#"><i class="fa fa-bullseye"></i> <span class="nav-label">Display Units</span> </a></li>
+					<li><a href="#"><i class="fa fa-calendar-o"></i> <span class="nav-label">Events</span> </a></li>
+					<li><a href="#"><i class="fa fa-repeat"></i> <span class="nav-label">Loop Policies</span> </a></li>
+					<li><a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">Players</span> </a></li>
+					<li><a href="#" th:href="@{/}"><i class="fa fa-th-large"></i> <span class="nav-label">Registrations</span> </a></li>
+					<li th:classappend="${#httpServletRequest.getRequestURI().startsWith(#httpServletRequest.contextPath + '/groups') ? 'active':''}"><a href="#" th:href="@{/groups}"><i class="fa fa-users"></i> <span class="nav-label">User Groups</span> </a></li>
+					<li th:classappend="${#httpServletRequest.getRequestURI().startsWith(#httpServletRequest.contextPath + '/users') ? 'active':''}"><a href="#" th:href="@{/users}"><i class="fa fa-user"></i> <span class="nav-label">Users</span> </a></li>
 				</ul>
 			</div>
 		</nav>
@@ -111,23 +76,20 @@
 			<div th:fragment="page-heading"
 				class="row wrapper border-bottom white-bg page-heading">
 				<div class="col-lg-9">
-					<h2 th:text="${#httpServletRequest.servletPath}">This is main title</h2>
+					<h2 th:text="${sessionName}">[session.name]</h2>
 					<ol class="breadcrumb">
-						<li><a href="index.html" th:href="@{/}">home</a></li>
-						<li class="active"><strong th:text="${#httpServletRequest.servletPath}">Servlet Path</strong></li>
+						<li><a href="index.html" th:href="@{/}">Home</a></li>
+						<li class="active"><a href="#" th:href="@{/} + ${path}"><strong th:text="${sessionName}">[session.name]</strong></a></li>
 					</ol>
 				</div>
 				<div class="col-lg-3">
 					<div class="title-action">
-						<a href="" th:href="${#httpServletRequest.requestURI + '/new'}" class="btn btn-primary">Novo</a>
+						<a href="" th:href="@{/} + ${path + '/new'}" class="btn btn-primary">Novo</a>
 					</div>
 				</div>
 			</div>
 
-			<!-- Main Content -->
-			
-			
-
+			<!-- Main Content -->	
 
 			<!-- APP Footer -->
 			<div th:fragment="footer" class="footer">
@@ -135,7 +97,7 @@
 					10GB of <strong>250GB</strong> Free.
 				</div>
 				<div>
-					<strong>Copyright</strong> Example Company &copy; 2014-2015
+					<strong>[[${#httpServletRequest.contextPath + 'users'}]]</strong> Example Company &copy; 2014-2015
 				</div>
 			</div>
 
